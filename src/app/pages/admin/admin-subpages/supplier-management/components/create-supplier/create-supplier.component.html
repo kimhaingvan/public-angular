@@ -1,0 +1,69 @@
+<div class="">
+  <div class="d-flex justify-content-center align-items-center text-app font-weight-bold">
+    <h1 class="font-weight-bold">Đăng ký nhà cung cấp mới</h1>
+  </div>
+  <div class="d-flex flex-row p-5 mb-4" [formGroup]="createSupplierForm">
+    <div class="avatar col-3 mb-4">
+      <div class="d-flex flex-column">
+        <img src='assets/images/default-book.png' style="height: 100%; width: 100%; object-fit: cover;" alt="Avatar" />
+       
+      
+      </div>
+    </div>
+    <div class=" col-9 d-flex flex-column">
+      <div class="d-flex flex-column">
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Tên nhà cung cấp: </b></div>
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nhập tên nhà cung cấp" formControlName="contact_name"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Địa chỉ: </b></div>
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nhập địa chỉ nhà cung cấp"  
+            formControlName="address"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Email: </b></div>
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nhập địa chỉ email "  formControlName="email"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Số điện thoại: </b></div>
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nhập số điện thoại"  formControlName="phone"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Ghi chú: </b></div>
+          <div class="col-9">
+          <textarea class="form-control" placeholder="Nhập ghi chú" formControlName="note"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="row py-3">
+          <div class="col-2 app-flex">
+            <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+              </i> Quay lại</div>
+          </div>
+            <div class="col-9 d-flex flex-row justify-content-end">
+              <div class=" btn-outline-app  align-self-center mr-2" (click)="ResetDataForm()">
+                <span class="ml-1" style="width: 60px;">Hủy</span>
+              </div>
+              <div class="btn-app  align-self-center" (click)="CreateSupplier()">
+                <span>Tạo mới</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

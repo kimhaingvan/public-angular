@@ -1,0 +1,29 @@
+.app-flex {
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+input {
+    font-weight: 500!important;
+}
+::placeholder {
+    opacity: 0.6!important;
+}
+
+.cursor-pointer {
+    cursor: pointer!important;
+}
+
+input[type="text"]:disabled {
+    background: rgb(241, 240, 240)!important;
+    opacity: .9;
+}
+
+.line-clamp {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

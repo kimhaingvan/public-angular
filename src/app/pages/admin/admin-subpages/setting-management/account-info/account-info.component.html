@@ -1,0 +1,45 @@
+<div class="box setting-box mt-0">
+  <div class="setting-header">Thông tin tài khoản </div>
+  <div class="setting-body">
+    <div class="row py-3">
+      <div class="col-2 app-flex"><b>Mã tài khoản: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập tên tài khoản" 
+        [(ngModel)]="user_info.account.account_id"
+        />
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-2 app-flex"><b>Tên tài khoản: </b></div>
+      <div class="col-10 ">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập tên tài khoản" 
+        [(ngModel)]="user_info.account.account_name"
+        />
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-2 app-flex"><b>Email: </b></div>
+      <div class="col-10 ">
+        <input type="text" class="form-control read-only position-relative" disabled placeholder="Nhập số điện thoại" 
+        [(ngModel)]="user_info.email"
+        />
+        <div class="position-absolute h-100 change-btn d-flex align-items-center"><i class="fa fa-pencil"></i>Thay đổi</div>
+      </div>
+    </div>
+    <div class="row py-3">
+      <div class="col-2 app-flex"><b>Số điện thoại: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only  position-relative" disabled placeholder="Nhập địa chỉ email" 
+        [(ngModel)]="user_info.phone"
+        />
+        <div class="position-absolute h-100 change-btn d-flex align-items-center"><i class="fa fa-pencil"></i>Thay đổi</div>
+
+      </div>
+    </div>
+  </div>
+  <div class="setting-footer ">
+    <div class="btn-outline-app ml-auto" (click)="OpenChangePasswordModal()">
+      Thay đổi mật khẩu
+    </div>
+  </div>
+</div>

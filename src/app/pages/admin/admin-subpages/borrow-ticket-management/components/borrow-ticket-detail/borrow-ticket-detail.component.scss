@@ -1,0 +1,26 @@
+
+.item-row {
+    display: flex;
+    transition: 0.5s;
+    padding-left: 36px;
+    height: 100px;
+    align-self: center !important;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 3px 3px 8px 3px rgba(122, 159, 216, 0.2);
+    margin-bottom: 20px;  
+  
+    .row {
+      .col {
+        position: relative;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 22px;
+      }
+    }
+
+  
+  }
+  

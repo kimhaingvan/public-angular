@@ -1,0 +1,233 @@
+
+<div class="p-4 content position-relative" style="height: 100vh">
+  <div class="h-100 d-flex align-items-start flex-column">
+    <div class="d-flex w-100 h-100 justify-content-between overflow-hidden mb-auto no-print" >
+      <div class="left-part">
+        <div class="w-100 h-100">
+          <div class="d-flex align-items-start flex-column h-100">
+            <div class="list-order-line mb-auto w-100 box setting-box mt-0 ">
+              <div class="setting-header p-0">
+                <h3 class="my-3 text-app ml-3" >
+                  <b style="font-size: 2rem">
+                    Giỏ hàng <i class="fas fa-cart-plus text-app"></i>
+                  </b></h3>
+              </div>
+              <div class="order-lines">
+                <div class="mb-3">
+                  <ng-container *ngFor="let order_line of order_lines; let i = index">
+                    <div class="d-flex align-items-center order-line-wrapper mb-3" >
+                      <div class="line-index text-center font-weight-bold">
+                        {{i + 1}}.
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div  class="upload-photo-wrapper"><img alt="Logo sản phẩm" height="100%" class="p-0 line-logo" src="https://etop.vn/upload/img/BwD/BwDgdvc16GsJ0RyWKN2R.jpg"></div>
+                      </div>
+                      <div class="flex-fill product-name">
+                        <div class="w-100">
+                          <div  class="text-wrap text-truncate text-app font-weight-bold">{{order_line.book_name}}</div>
+                          <div  class="text-default font-10"> Tồn: {{order_line.new_amount}}</div>
+                        </div>
+                      </div>
+                      <div class="line-price m-1 text-right">
+                        <div  class="font-weight-bold">{{order_line.retail_price | vnd}}</div>
+                        <i *ngIf="order_line.discount">Giảm giá: {{order_line.discount * 100}}%</i>
+                      </div>
+                      <div  class="d-flex align-items-center line-quantity ml-5" >
+                        <div  role="group" class="btn-group border group-quantity">
+                          <button  type="button" class="btn btn-sm border-0 bg-transparent" (click)="DecreaseQuantity(order_line)"><i class="fa fa-minus text-white"></i></button>
+                          <input [(ngModel)]="order_line.quantity" type="number" class="number-input text-center editable" style="width: 8rem" (ngModelChange)="ChangeQuantity(order_line)" min="0">
+                          <button  type="button" class="btn btn-sm border-0 bg-transparent" (click)="IncreaseQuantity(order_line)"><i class="fa fa-plus text-white"></i></button>
+                        </div>
+                      </div>
+                      <div  class="font-weight-bold text-right line-payment"> {{order_line.total_price | vnd}}  </div>
+                      <div  class="d-flex align-items-center line-delete" style="cursor: pointer;" (click)="RemoveOrderLine(order_line)"><i class="fas fa-minus-circle"></i></div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+          </div>
+          <div class="list-product-group position-relative w-100 box setting-box mt-0">
+            <div class="setting-header p-0">
+              <h3 class="my-3 text-app ml-3" >
+                <b style="font-size: 2rem">
+                  Sản phẩm <i class="fas fa-book text-app"></i>
+                </b></h3>
+            </div>
+            <div class="list-product-header">
+              <div class="d-flex align-items-center h-100">
+                <div class="barcode barcode-click border-right cursor-pointer px-3">
+                  <img  src="assets/images/barcode.svg" alt="" class="barcode-click" style="width: 2.25rem;">
+                  <span  class="barcode-click ml-2">Quét mã vạch</span>
+                </div>
+                <div class="position-relative h-100">
+                  <input id="search-input" type="text" placeholder="Tìm sản phẩm" class="h-100 search-pos border-0 ng-pristine ng-valid ng-touched" (keyup)="SearchBooks()" [(ngModel)]="search_keyword" />
+                  <img src="assets/images/search_icon.png" alt="search" class="search-icon">
+                </div>
+              </div>
+            </div>
+            <div class="list-product">
+              <ng-container *ngFor="let book of books">
+                <div class="product-card" (click)="AddToChart(book)">
+                  <div  class="product-card-item"><div class="box-card">
+                    <img class="product-img h-100" [src]="book?.image || 'assets/images/default-book.png'"  alt="" style="width: 120px!important; height: 180px!important;object-fit: cover">
+
+                    <div class="product-quantity">Tồn: {{book.new_amount}}
+                    </div>
+                    <div class="product-price">{{book.retail_price | vnd}}</div>
+                  </div>
+                    <div placement="top" class="product-name-card font-weight-bold">{{book.book_name}}</div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-part position-relative">
+      <div class= "mb-auto w-100 box setting-box mt-0" style="height: 30%!important; margin-bottom: 10px!important;">
+        <div class="setting-header p-0">
+          <h3 class="my-3 text-app ml-3" >
+            <b style="font-size: 2rem">
+              Khách hàng <i class="fas fa-users text-app"></i>
+            </b></h3>
+        </div>
+        <div class="row" >
+          <div class=" col-12 pt-4 d-flex flex-column">
+            <div class="row mx-0">
+              <div class="col-12">
+                <form class="example-form">
+                  <mat-form-field class="example-full-width w-100">
+                    <input type="text" placeholder="Mã đọc giả" aria-label="Number" matInput  [formControl]="customer_control"
+                           [matAutocomplete]="customerAuto">
+                    <mat-autocomplete autoActiveFirstOption #customerAuto="matAutocomplete">
+                      <mat-option *ngFor="let customer of customer_filtered_options | async" [value]="customer.customer_id">
+                        <b>
+                          {{customer.customer_id }} - {{customer.last_name }} {{customer.first_name }}
+                        </b>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                </form>
+              </div>
+            </div>
+            <div class="row align-items-center mb-4 mx-0">
+              <div class="col-3 font-weight-bold">
+                Mã khách hàng:
+              </div>
+              <div class="col-9">
+                <input *ngIf="customer_item" type="text" style="width: 85%" class="form-control read-only text-app font-weight-bold d-inline-block" disabled   name="inputField" [(ngModel)]="customer_item.customer_id" />
+
+                <input *ngIf="!customer_item" type="text" style="width: 85%" class="form-control read-only text-app font-weight-bold d-inline-block" disabled   name="inputField" placeholder="Mã khách hàng"/>
+                <div class="col align-self-center d-inline" style=""  (click)="ClearCustomer()">
+                  <i class="fa fa-remove btn-danger" style="padding: 8px 10px; display: inline-block"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <div class="row align-items-center mb-4 mx-0">
+              <div class="col-3 font-weight-bold">
+                Số điện thoại:
+              </div>
+              <div class="col-9">
+                <input *ngIf="customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" [(ngModel)]="customer_item.phone" />
+                <input *ngIf="!customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" placeholder="Số điện thoại "/>
+              </div>
+            </div>
+            <div class="row align-items-center mb-4 mx-0">
+              <div class="col-3 font-weight-bold">
+                Họ và tên:
+              </div>
+              <div class="col-5">
+                <input *ngIf="customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" [(ngModel)]="customer_item.last_name" />
+                <input *ngIf="!customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" placeholder="Họ"/>
+              </div>
+              <div class="col-4">
+                <input *ngIf="customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" [(ngModel)]="customer_item.first_name" />
+                <input *ngIf="!customer_item" type="text" class="form-control read-only text-app font-weight-bold" disabled   name="inputField" placeholder="Tên "/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class=" position-relative w-100 box setting-box mt-0" style="height: 69%!important;">
+        <div class="setting-header p-0">
+          <h3 class="my-3 text-app ml-3" >
+            <b style="font-size: 2rem">
+              Hóa đơn <i class="fas fa-receipt text-app"></i>
+            </b></h3>
+        </div>
+        <div class="setting-body">
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Tạm tính: </b></div>
+            <div class="col-8">
+              <div class="font-weight-bolder text-right">{{order.price | vnd}}</div>
+            </div>
+          </div>
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Số lượng: </b></div>
+            <div class="col-8">
+              <div class="font-weight-bolder text-right">{{order.total_amount}}</div>
+            </div>
+          </div>
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Giảm giá (đ): </b></div>
+            <div class="col-8">
+              <input type="number" class="form-control text-right" placeholder="Nhập giảm giá" (ngModelChange)="SumOrder()" [(ngModel)]="order.discount"
+              />
+            </div>
+          </div>
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Phụ thu khác(đ): </b></div>
+            <div class="col-8">
+              <input type="number" class="form-control text-right" placeholder="Nhập phụ thu" (ngModelChange)="SumOrder()" [(ngModel)]="order.fee"
+              />
+            </div>
+          </div>
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Khách thanh toán(đ): </b></div>
+            <div class="col-8">
+              <input type="number" class="form-control text-right" placeholder="Nhập phụ thu" (ngModelChange)="SumOrder()" [(ngModel)]="order.customer_paid_fee"
+              />
+            </div>
+          </div>
+          <div class="row py-2 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Ghi chú đơn hàng: </b></div>
+            <div class="col-8">
+              <input type="text " class="form-control text-right" placeholder="Nhập ghi chú đơn hàng" (ngModelChange)="SumOrder()" [(ngModel)]="order.note"/>
+            </div>
+          </div>
+          <div>
+            <hr class="font-weight-bolder" size="20" height="6px" style="background: black; height:1px">
+          </div>
+          <div class="row py-3 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Tổng cộng: </b></div>
+            <div class="col-8">
+              <div class="font-weight-bolder text-right">{{order.total | vnd}}</div>
+            </div>
+          </div>
+          <div class="row py-3 px-0">
+            <div class="col-4 d-flex align-items-center"><b>Tiền thừa: </b></div>
+            <div class="col-8">
+              <div class="font-weight-bolder text-right">{{(order.customer_paid_fee - order.total) | vnd}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="setting-footer d-block">
+          <div class="row px-0 pb-1">
+            <div class="btn-app btn-block w-100" style="font-size: 1.5rem" (click)="CreateOrder()">Thanh toán hóa đơn <i class="fas fa-cart-plus text-white" style="height: 1.5rem"></i></div>
+          </div>
+          <div class="row px-0 pb-1">
+            <div class="btn-outline-app btn-block w-100" style="font-size: 1.5rem">Thanh toán hóa đơn bằng ngân hàng</div>
+          </div>
+          <div class="row px-0 pb-1">
+            <div class="btn-app btn-block w-100" style="background: #ae2070; font-size: 1.5rem" (click)="CreateOrderByMomo()">Thanh toán hóa đơn bằng MOMO
+              <img src="assets/images/momo-icon.jpg" style="height: 2.5rem" class="ml-2" alt=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.box {
+  box-shadow: 0 0 8px 0 rgba(0,0,0,.15);
+  border-radius: 5px;
+  text-align: center;
+  .header-box {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 1px solid #ced1d5 !important;
+  }
+  .content-box {
+    //text-align: center;
+    padding: 1rem;
+    min-height: 6rem;
+  }
+}

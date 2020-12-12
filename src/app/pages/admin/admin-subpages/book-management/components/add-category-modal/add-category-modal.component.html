@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <div class="modal-title big-font">
+    Thêm thể loại sách
+  </div>
+  <div class="close" (click)="dismissModal()">
+    <span class="text-large">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Tên thể loại sách: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập tên thể loại sách" name="category_name" [(ngModel)]="category.category_name"
+      />
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Mô tả: </b></div>
+    <div class="col-9">
+      <textarea class="form-control" placeholder="Nhập mô tả thể loại" [(ngModel)]="category.description"></textarea>
+    </div>
+
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-app btn-outline-app" (click)="dismissModal()">Đóng</button>
+  <button class="btn btn-app text-white" (click)="AddCategory()">
+    Xác nhận
+  </button>
+</div>

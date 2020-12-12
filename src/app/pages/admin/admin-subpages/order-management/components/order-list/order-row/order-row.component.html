@@ -1,0 +1,28 @@
+<div class="item-row py-2">
+  <div class="row d-flex flex-row">
+
+    <div class="col font-weight-bold text-app app-flex flex-column text-center" style="max-width:200px;">
+      {{(order_item?.order_id| standardizedId) || "-"}}
+    </div>
+
+    <div class="col font-weight-bold text-app app-flex flex-column text-center" style="max-width:200px;">
+      <div> {{(order_item?.customer?.customer_id | standardizedId)|| "-"}}
+        <i class="fas fa-external-link-alt external-link-icon"></i>
+      </div>
+      <div>{{(order_item?.customer?.last_name) + ' ' + (order_item?.customer?.first_name) || "-"}}
+      </div>
+    </div>
+
+    <div class="col app-flex flex-column text-center text-app font-weight-bolder" style="max-width:200px;">{{(order_item?.total | vnd)}}
+    </div>
+
+    <div class="col app-flex flex-column text-center" style="max-width:200px;">{{order_item?.type == 'in' && "Nhập" || "Xuất"}}</div>
+
+    <div class="col app-flex flex-column text-center text-app font-weight-bolder" style="max-width:200px;">{{(order_item?.total_quantity)}}
+    </div>
+
+    <div class="col app-flex flex-column text-center">{{(order_item?.note || "-")}}</div>
+
+
+  </div>
+</div>

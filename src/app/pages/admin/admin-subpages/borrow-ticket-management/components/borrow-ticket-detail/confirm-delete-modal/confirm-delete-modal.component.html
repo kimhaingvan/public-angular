@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <div class="modal-title big-font">
+    Xác nhận hủy phiếu mượn sách
+  </div>
+  <div class="close" (click)="dismissModal()">
+    <span class="text-large">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+  <div>Bạn có thực sự muốn hủy phiếu mượn sách <b>{{borrow_ticket?.borrow_ticket_id}}</b> ra khỏi hệ thống thư quán không ? </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-app btn-outline-app" (click)="dismissModal()">Đóng</button>
+  <button class="btn btn-app text-white" (click)="onConfirmDelete()">
+    <i class="fa fa-spin fa-circle-o-notch" *ngIf="loading"></i>
+    Xác nhận
+  </button>
+</div>

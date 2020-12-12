@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <div class="modal-title big-font">
+    Thêm nhà cung cấp
+  </div>
+  <div class="close" (click)="dismissModal()">
+    <span class="text-large">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Tên nhà cung cấp: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập tên nhà cung cấp" name="category_name" [(ngModel)]="supplier.contact_name"
+      />
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Địa chỉ: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập địa chỉ" name="category_name" [(ngModel)]="supplier.address"
+      />
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Số điện thoại: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập số điện thoại" name="category_name" [(ngModel)]="supplier.phone"
+      />
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Email: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập email" name="category_name" [(ngModel)]="supplier.email"
+      />
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Ghi chú: </b></div>
+    <div class="col-9">
+      <textarea class="form-control" placeholder="Nhập ghi chú" [(ngModel)]="supplier.note"></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-app btn-outline-app" (click)="dismissModal()">Đóng</button>
+  <button class="btn btn-app text-white" (click)="AddSupplier()">
+    Xác nhận
+  </button>
+</div>

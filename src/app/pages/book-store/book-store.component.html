@@ -1,0 +1,46 @@
+<!--<div class="text-center mt-4 message-box">-->
+<!--    <div class="box setting-box mt-0"  style="max-width: 350px;" *ngIf="isDisplayMessage" >-->
+<!--        <div class="setting-header d-flex text-app font-weight-bold text-center my-0 py-3">-->
+<!--                Chat App-->
+<!--                <div class="ml-auto">-->
+<!--                    <span class="fas fa-times  cursor-pointer text-danger" (click)="ToggleDisplayMessage()"></span>-->
+<!--                </div>-->
+
+<!--        </div>-->
+<!--        <div class="setting-body py-0" style="height: 200px; overflow-y: auto" #mes>-->
+<!--            <ng-container *ngIf="(message_list$ | async)?.length > 0; else noMess">-->
+<!--                <div *ngFor="let message of (message_list$ | async)" class="message"-->
+<!--                    [class.flex-row-reverse]="message.type=='reply'"-->
+<!--                    [class.flex-row]="message.type=='send'">-->
+<!--                    <div-->
+<!--                        [class.reply-content-message]="message.type=='reply'"-->
+<!--                        [class.send-content-message]="message.type=='send'"-->
+<!--                        >-->
+<!--                        {{message.content}}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </ng-container>-->
+<!--            <ng-template #noMess>-->
+<!--                <p>-->
+<!--                    Bạn chưa có tin nhắn nào!-->
+<!--                </p>-->
+<!--            </ng-template>-->
+
+<!--        </div>-->
+<!--        <div class="setting-footer ">-->
+<!--            <input  class="form-control" placeholder="Nhập tin nhắn" type="text" [(ngModel)]="chatText" style="width: 300px; border-radius: 50px" (keydown.enter)="SendMessage()">-->
+<!--            <div (click)="SendMessage()" class=" ml-3 btn-app d-inline-block px-4 py-2">Gửi </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div style="width: 350px;"  class="box cursor-pointer" *ngIf="!isDisplayMessage" (click)="ToggleDisplayMessage()">-->
+<!--            <div class="setting-header d-flex text-app font-weight-bold text-center my-0 py-3">-->
+<!--                Chat App-->
+<!--                <div class="ml-auto">-->
+<!--                    &lt;!&ndash; <span class="fas fa-times  cursor-pointer text-danger" (click)="LeaveRoom()"></span> &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--    </div>-->
+<!--</div>-->
+<h1>ĐÂY LÀ TRANG GIAO DIỆN CỦA USER SAU KHI ĐÃ ĐĂNG NHẬP</h1>
+<h1 style="color: red">ĐANG PHÁT TRIỂN cho khóa luận</h1>
+<app-message-box></app-message-box>

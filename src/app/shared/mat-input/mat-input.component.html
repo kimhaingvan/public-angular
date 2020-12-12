@@ -1,0 +1,29 @@
+<form *ngIf="type =='auto-complete'">
+  <mat-form-field [class.example-full-width]="!canAdd">
+    <input type="text"
+          [placeholder]="placeholder"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <div *ngIf="canAdd" (click)="onOpenModal()">
+      <div class="btn-add px-3 py-2">
+        <i class="fa fa-plus"></i>
+      </div>
+    </div>
+  </mat-form-field>
+</form>
+
+<form *ngIf="type =='input'">
+  <mat-form-field class="example-full-width">
+    <mat-label>{{label}}</mat-label>
+    <input matInput [placeholder]="placeholder">
+  </mat-form-field>
+</form>
+
+

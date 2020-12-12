@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <div class="modal-title big-font">
+    Gửi email nhắc nhở
+  </div>
+  <div class="close" (click)="dismissModal()">
+    <span class="text-large">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="reader-info mb-3">
+    <h3 class="mb-0">Thông tin độc giả:</h3>
+    <div class="d-flex flex-column">
+      <div class="row">
+        <div class="col-2">Họ tên: </div>
+        <div class="col-9 text-app font-weight-bold">{{(detail_borrow_ticket$ | async)?.customer?.last_name}} {{(detail_borrow_ticket$ | async)?.customer?.first_name}}</div>
+      </div>
+      <div class="row">
+        <div class="col-2">Email: </div>
+        <div class="col-9 text-app font-weight-bold">{{(detail_borrow_ticket$ | async)?.customer?.email}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-info">
+    <h3 class="mb-0">Nội dung tin nhắn:</h3>
+    <div class="d-flex flex-column">
+      <div class="row">
+        <div class="col-12">
+          <textarea class="w-100" name="message" id="message" rows="5" [(ngModel)]="message" placeholder="Nhập nội dung tin nhắn nhắc nhở"></textarea>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-app btn-outline-app" (click)="dismissModal()">Đóng</button>
+  <button class="btn btn-app text-white" (click)="sendEmail()">
+    Gửi
+  </button>
+</div>

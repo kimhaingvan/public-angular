@@ -1,0 +1,46 @@
+
+.sidebar-menu {
+  color: #fff;
+  position: fixed;
+  z-index: 10;
+  overflow: hidden;
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: var(--app-color);
+  box-shadow: 5px 0 5px 0 rgba(0,0,0,.2);
+  &:hover {
+    width: max-content;
+  }
+
+  .menu-item {
+    &.active {
+      background-color: #4580c3;
+      border-left: 4px solid #eee;
+    }
+
+    width: auto;
+    height: var(--sidebar-width);
+
+    &:last-child {
+      margin-top: auto;
+    }
+
+    &:hover {
+      background-color: #4580c3;
+      border-left: 4px solid #eee;
+    }
+
+    .menu-icon {
+      height: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      cursor: pointer;
+    }
+
+    .menu-slider {
+      height: var(--sidebar-width);
+      padding: 0 20px 0 10px;
+      cursor: pointer;
+      width: auto;
+    }
+  }
+}

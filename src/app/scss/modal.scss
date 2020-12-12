@@ -1,0 +1,22 @@
+.modal-header,
+.modal-footer {
+  padding: 0.8rem;
+  font-weight: bolder;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+.modal-header {
+  justify-content: center;
+}
+
+.close {
+  position: absolute;
+  right: 2rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}

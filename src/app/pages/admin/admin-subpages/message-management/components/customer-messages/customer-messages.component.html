@@ -1,0 +1,101 @@
+
+<div class="d-flex flex-row h-100">
+  <div class="p-4 d-flex h-100">
+    <div class="h-100 overflow-hidden">
+      <div class="setting-title d-flex flex-row align-items-center" style="max-height:65px">
+        <div class="app-flex text-app">
+          <i class="fas fa-4x fa-comments" style="height: 70px; width:70px; background: transparent"></i>
+        </div>
+        <h2 style="color: gray; margin-left: 20px">
+          <b>
+            Chăm sóc khách hàng
+          </b>
+          <br>
+          <b>
+            Đại học Mở TPHCM
+          </b>
+        </h2>
+      </div>
+      <div class="menu-list py-3">
+        <div class="box setting-box mt-0 h-100">
+          <h1 class="setting-header text-app font-weight-bold mb-2">Danh sách tin nhắn</h1>
+          <div class="setting-body p-2" style="height: 89%">
+            <div class="search-convertation-input w-100">
+              <i class="fas fa-search"></i>
+              <input placeholder="Tìm kiếm cuộc trò chuyện" class="w-100 form-control"/>
+            </div>
+            <ng-container *ngFor="let conversation of (all_conversations$ | async)">
+              <div class="message-box w-100" [class.active]="(active_conversation$ | async) == conversation" (click)="SetActiveConversation(conversation)">
+                <div class="avatar-message-box">
+                  <img [src]="'assets/images/default-avatar.png'" alt="" class="w-100">              
+                </div>
+                <div class="overview-message-box">
+                  <h3 class="mb-0 line-clamp" [class.font-weight-bold] ="!conversation.is_read">{{conversation?.account?.account_name}}</h3>
+                  <p class="mb-0 updated_at"  [class.font-weight-bold] ="!conversation.is_read">{{conversation?.updated_at | date: 'hh:mm dd/MM/yyyy' }}</p>
+                  <span class="last-message" [class.is_not_read]="!conversation.is_read">
+                    {{conversation?.last_message }}
+                  </span>
+                </div>
+                <span class="ml-auto mr-3" *ngIf="!conversation.is_read"><i class="fas fa-circle text-app"></i></span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-4 d-flex h-100 flex-grow-1">
+    <div class="h-100 overflow-hidden w-100">
+      <div class="setting-title d-flex flex-row align-items-center" style="min-height:65px">
+      </div>
+      <div class="menu-list py-3">
+        <div class="box setting-box mt-0 h-100 d-flex flex-column" (click)="SetActiveConversation(active_conversation)">
+          <h1 class="setting-header text-app font-weight-bold mb-2 app-flex">
+            <div class="avatar-message-box">
+              <img [src]="'assets/images/default-avatar.png'" alt="" class="w-100">              
+            </div>
+            <h3 class="mb-0 line-clamp" [class.font-weight-bold] ="true">{{(active_conversation$ | async)?.account?.account_name}}</h3>
+            <div class="icons ml-auto d-flex">
+              <i class="fas fa-phone text-app mr-3 cursor-pointer"></i>
+              <i class="fas fa-video text-app mr-3 cursor-pointer"></i>
+              <i class="fas fa-info-circle text-app mr-3 cursor-pointer"></i>
+            </div>
+          </h1>
+          <div class="setting-body py-0 h-100" style="overflow-y: auto"  #mes>
+            <ng-container *ngIf="(active_conversation$ |async)?.messages?.length > 0; else noMess">
+                <div class="cursor-pointer text-center text-app" (click)="LoadMoreMessages(active_conversation)"  *ngIf="(active_conversation$ |async)?.current_page > 1">
+                  <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" *ngIf="is_loading"></i>
+                  Nhấp vào để đọc thêm tin nhắn 
+                </div>
+                <div *ngFor="let message of (active_conversation$ |async)?.messages" class="message"
+                    [class.flex-row-reverse]="message.type=='reply'"
+                    [class.flex-row]="message.type=='send'">
+                    <div
+                      [title]="message.created_at | date:'hh/mm dd/MM/yyyy'"
+                        [class.reply-content-message]="message.type=='reply'"
+                        [class.send-content-message]="message.type=='send'"
+                        >
+                        {{message.content}}
+                    </div>
+                </div>
+            </ng-container> 
+            <ng-template #noMess>
+                <p class="d-flex app-flex" style="color: rgba(153, 153, 153, 1);">
+                    Bạn chưa có tin nhắn nào!
+                </p>
+            </ng-template>
+          </div>
+          <div class="setting-footer mt-auto">
+            <div class="icons mr-auto d-flex">
+              <i class="fas fa-plus-circle text-app mr-3 cursor-pointer fa-2x"></i>
+              <i class="fas fa-images text-app mr-3 cursor-pointer fa-2x"></i>
+              <i class="fas fa-link text-app mr-3 cursor-pointer fa-2x"></i>
+            </div>
+              <input (keyup.enter)="SendMessage()" [(ngModel)]="chatText" class="form-control" placeholder="Nhập tin nhắn" type="text" style="max-height: 65px; overflow: auto; border-radius: 15px">
+              <div class=" ml-3 btn-app d-inline-block px-4 py-2 send-btn" (click)="SendMessage()">Gửi </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

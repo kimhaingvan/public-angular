@@ -1,0 +1,83 @@
+.header-admin {
+  background-color: var(--app-color);
+  height: var(--header-page-height);
+  .page-title {
+    color: #fff;
+    font-size: 2.5rem;
+  }
+  box-shadow: 0 -15px 60px 0 rgba(0, 0, 0, 0.8);
+  .header-item {
+    cursor: pointer;
+    height: 100%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    padding: 0 1rem;
+    &.active {
+      border-bottom: 3px solid #eee;
+    }
+    text-decoration: none;
+  }
+}
+
+.page-content-admin {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100vh - var(--header-page-height));
+}
+
+.real-avatar {
+  border: 1px solid black;
+}
+
+.box {
+  width: 100%;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
+  border-radius: 7px;
+  border: 2px solid rgba(0,0,0,.2);
+}
+
+.setting-box {
+  margin-top: 1.25rem;
+}
+
+.setting-header {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.setting-body, .setting-footer, .setting-header {
+  padding: 1.5rem;
+}
+.setting-body, .setting-header {
+  border-bottom: 1px solid lightgray;
+}
+
+.setting-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.note {
+  padding: .5rem 0;
+  text-align: left;
+}
+
+.read-only {
+  cursor: not-allowed;
+}
+
+.content-wrapper {
+  overflow-y: auto;
+  width: 70%;
+  padding: 1rem;
+}
+
+.menu-sidebar {
+  overflow-y: auto;
+  width: 30%;
+}

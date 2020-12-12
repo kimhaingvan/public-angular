@@ -1,0 +1,193 @@
+<ng-container>
+  <div class="d-flex justify-content-center align-items-center text-app font-weight-bold">
+    <h1 class="font-weight-bold">Thông tin chi tiết nhân viên <span>{{ (detail_employee$ | async)?.employee_name}}</span></h1>
+  </div>
+  <ng-container *ngIf="!isEditing, else updateForm">
+    <div class="d-flex flex-row p-5 mb-4">
+      <div class="avatar col-3 mb-4">
+        <div class="d-flex flex-column">
+          <img src='assets/images/default-book.png' style="height: 100%; width: 100%; object-fit: cover;" alt="Avatar" />
+          <h1 class="text-app text-left font-weight-bold text-center my-4">Mã nhân viên: {{(detail_employee$ | async)?.employee_id | standardizedId}}</h1>
+        </div>
+      </div>
+      <div class=" col-9 d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Mã nhân viên: </b></div>
+            <div class="col-9 text-app font-weight-bold">{{((detail_employee$ | async)?.employee_id | standardizedId ) || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tên nhân viên: </b></div>
+            <div class="col-9 text-app font-weight-bold">{{(detail_employee$ | async)?.last_name + ' ' + (detail_employee$ | async)?.first_name || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Chứng minh thư: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.identity_id || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Email: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.email || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Số điện thoại: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.phone || "-"}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Ngày sinh: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.birth_day | date: 'shortDate' || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Địa chỉ: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.address || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Lương cơ sở: </b></div>
+            <div class="col-9 text-app font-weight-bold">{{((detail_employee$ | async)?.basic_rate |vnd)|| "-"}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Giới tính: </b></div>
+            <div class="col-9">{{((detail_employee$ | async)?.gender) ? 'Nam' : 'Nữ'|| '-' }}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Ghi chú: </b></div>
+            <div class="col-9">{{(detail_employee$ | async)?.note || '-'}}</div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex">
+              <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+                </i> Quay lại</div>
+            </div>
+            <ng-container>
+              <div class="col-9 d-flex flex-row justify-content-end" (click)="onOpenDeleteModal()">
+                <div class="btn-danger  align-self-center mr-2">
+                  <i class="fas fa-trash-alt trash-icon"></i>
+                  <span class="ml-1" style="width: 60px;">Xóa bỏ</span>
+                </div>
+                <div class="btn-app  align-self-center" (click)="onClickUpdateBtn()">
+                  <i class="fas fa-tools mr-2 "></i>
+                  <span>Cập nhật</span>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #editButtons>
+              <div class="d-flex flex-row ml-auto">
+                <div class="btn  btn-outline-danger d-flex justify-content-center align-items-center mr-2">
+                  Hủy
+                </div>
+                <div class="btn btn-app btn-outline-app align-self-center" >
+                  <span class="ml-1">Xác nhận</span>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #updateForm>
+    <div class="d-flex flex-row p-5 mb-4" [formGroup]="updateEmployeeForm">
+      <div class="avatar col-3 mb-4">
+        <div class="d-flex flex-column">
+          <img src='assets/images/default-book.png' style="height: 390px; width: 390px; object-fit: cover;" alt="Avatar" />
+        </div>
+      </div>
+      <div class=" col-9 d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Họ: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập họ" formControlName="last_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tên: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập tên" formControlName="first_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Chứng minh thư: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập chứng minh thư" formControlName="identity_id"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Email: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập địa chỉ email" formControlName="email"
+              />
+            </div>
+          </div>
+
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Số điện thoại: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập số điện thoại" formControlName="phone"
+              />
+            </div>
+          </div>
+
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Ngày sinh: </b></div>
+            <div class="col-9">
+              <input type="date" class="form-control" placeholder="Nhập vào ngày sinh" formControlName="birth_date"
+              />
+            </div>
+          </div>
+
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Địa chỉ: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập địa chỉ" formControlName="address"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Lương cơ sở: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập lương cơ bản" formControlName="basic_rate"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giới tính: </b></div>
+            <div class="col-9">
+              <select class="form-control" placeholder="Chọn giới tính" formControlName="gender">
+                <option value="" selected autofocus disabled>Chọn giới tính</option>
+                <option value=true style="background-color: white; color: var(--app-color)">Nam</option>
+                <option value=false style="background-color: white; color: var(--app-color)">Nữ</option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Ghi chú: </b></div>
+            <div class="col-9">
+            <textarea class="form-control" placeholder="Nhập ghi chú" formControlName="note"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex">
+              <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+                </i> Quay lại</div>
+            </div>
+              <div class="col-9 d-flex flex-row justify-content-end">
+                <div class=" btn-outline-app  align-self-center mr-2" (click)="setupDataForm()">
+                  <span class="ml-1" style="width: 60px;">Hủy</span>
+                </div>
+                <div class="btn-app  align-self-center" (click)="UpdateEmployee()">
+                  <span>Xác nhận</span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </ng-template>
+</ng-container>

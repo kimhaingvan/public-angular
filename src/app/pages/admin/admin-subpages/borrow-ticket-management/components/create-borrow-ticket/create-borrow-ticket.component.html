@@ -1,0 +1,274 @@
+<ng-container *ngIf="!confirm_borrow_ticket; else confirm_borrow_ticket_view">
+  <div class="app-flex flex-column text-center" >
+    <div class="box setting-box mt-0 w-75" >
+      <div class="setting-header">
+        <div class="d-flex justify-content-center align-items-center text-app">
+          <h1 class="font-weight-bold text-app">Phiếu mượn sách</h1>
+        </div>
+      </div>
+      <div class="setting-body" style="border-bottom: 1px solid lightgrey">
+        <div class="col-12 d-flex flex-column justify-content-center">
+          <div class="row app-flex flex-row">
+            <div class="col-2 detail-title font-weight-bold text-app">Mã đọc giả: </div>
+            <div class="col-10 detail-info d-flex justify-content-center">
+              <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <input type="text" placeholder="Mã đọc giả" aria-label="Number" matInput [formControl]="customer_control"
+                    [matAutocomplete]="customerAuto">
+                  <mat-autocomplete autoActiveFirstOption #customerAuto="matAutocomplete">
+                    <mat-option *ngFor="let customer of customer_filtered_options | async" [value]="customer">
+                      {{customer | standardizedId}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="customer_item" style="padding-left:7rem">
+            <div class="col-2 app-flex">
+              <div class=" h-75" >
+                <img [src]="customer_item?.image ||'assets/images/default-avatar.png'" style="height: 100%; width: 100%; object-fit: cover;"
+                  alt="Avatar" />
+              </div>
+            </div>
+            <div class=" col-8 pt-4 d-flex flex-column">
+              <div class="row align-items-center mb-4">
+                <div class="col-3 font-weight-bold">
+                  Mã khách hàng:
+                </div>
+                <div class="col-9">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.customer_id | standardizedId" />
+                </div>
+              </div>
+              <div class="row align-items-center mb-4">
+                <div class="col-3 font-weight-bold">
+                  Họ và tên:
+                </div>
+                <div class="col-5">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.last_name" />
+                </div>
+                <div class="col-4">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.first_name" />
+                </div>
+              </div>
+              <div class="row align-items-center mb-4">
+                <div class="col-3 font-weight-bold">
+                  Số điện thoại:
+                </div>
+                <div class="col-9">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.phone" />
+                </div>
+              </div>
+
+              <div class="row align-items-center mb-4">
+                <div class="col-3 font-weight-bold">
+                  Email:
+                </div>
+                <div class="col-9">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.email" />
+                </div>
+              </div>
+              <div class="row align-items-center mb-4">
+                <div class="col-3 font-weight-bold">
+                  Chứng minh thư:
+                </div>
+                <div class="col-9">
+                  <input type="text" class="form-control read-only text-app font-weight-bold" disabled placeholder="Nhập địa chỉ email" (ngModelChange)="customer_item.customer_id=$event" name="inputField" [ngModel]="customer_item.identity_id" />
+                </div>
+              </div>
+            </div>
+            <div class="col-2 app-flex" (click)="ClearCustomer()">
+                <span class="btn btn-danger d-inline-flex">Xóa đọc giả</span>
+            </div>
+          </div>
+
+          <div class="row app-flex flex-row">
+            <div class="col-2  detail-title font-weight-bold text-app">Mã sách </div>
+            <div class="col-10 detail-info">
+              <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <input type="text" placeholder="Mã sách" aria-label="Number" matInput [formControl]="book_control"
+                    [matAutocomplete]="bookAuto">
+                  <mat-autocomplete autoActiveFirstOption #bookAuto="matAutocomplete">
+                    <mat-option *ngFor="let bookOption of book_filtered_options | async" [value]="bookOption">
+                      {{bookOption | standardizedId}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
+          <ng-container *ngIf="book_item">
+            <h3 class="text-center text-app font-weight-bold mb-2 mt-4">Thông tin chi tiết sách</h3>
+            <div class="item-row py-2 my-4 w-75">
+              <div class="row d-flex flex-row">
+                <div class="col align-self-center  font-weight-bold text-app" style="max-width:150px;">
+                  {{book_item?.book_id | standardizedId}}</div>
+                <div class="col align-self-center" style="max-width: 150px;">
+                  <img [src]="book_item?.image || 'assets/images/default-book.png'"
+                    style="height: 80px; width: 60px; object-fit: cover;" alt="" />
+                </div>
+                <div class="col align-self-center">{{book_item?.book_name || "-"}}</div>
+                <div class="col align-self-center" style="max-width: 150px;">{{book_item?.category?.category_name || "-"}}</div>
+                <div class="col align-self-center">
+                  {{book_item?.author?.author_name || "-"}}
+                </div>
+                <div class="col align-self-center" style="max-width: 150px;" (click)="AddBookToTicket()">
+                  <div class="btn-add px-3 py-2 position-relative">
+                    <i class="fa fa-plus"></i> Thêm sách
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="borrowTicket?.books?.length > 0">
+            <h3 class="text-center text-app font-weight-bold mb-2 mt-4">Danh sách sách mượn</h3>
+            <div *ngFor="let selected_book of borrowTicket.books; let i = index" [attr.data-index]="i">
+              <div class="item-row mt-4 ">
+                <div class="row d-flex flex-row">
+                  <div class="col align-self-center  font-weight-bold text-app" style="max-width:100px;"><b>
+                      {{i + 1}}
+                    </b></div>
+                  <div class="col align-self-center" style="max-width: 150px;">
+                    <img [src]="selected_book?.image || 'assets/images/default-avatar.png'"
+                      style="height: 80px; width: 60px; object-fit: cover;" alt="" />
+                  </div>
+                  <div class="col align-self-center">{{selected_book?.book_name || "-"}}</div>
+                  <div class="col align-self-center" style="max-width: 150px;">{{selected_book?.category?.category_name || "-"}}</div>
+                  <div class="col align-self-center">
+                    {{selected_book?.author?.author_name || "-"}}
+                  </div>
+                  <div class="col align-self-center">{{selected_book?.supplier?.contact_name || "-"}}</div>
+                  <div class="col align-self-center" style="max-width: 150px;" (click)="RemoveBookFromTicket(selected_book.book_id)">
+                    <i class="fa fa-remove btn-danger"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="setting-footer flex-end">
+        <div class="d-flex align-items-center ml-auto  ">
+          <span *ngIf="borrowTicket?.books?.length" class="mr-4">Số lượng sách mượn:
+            <b>{{borrowTicket.books?.length}}</b>
+          </span>
+          <div class="btn-outline-app" (click)="CreateBorrowTicket()">
+            Tạo phiếu mượn
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #confirm_borrow_ticket_view>
+  <div class="app-flex flex-column text-center">
+    <div class="box setting-box mt-0 w-75" >
+      <div class="setting-header">
+        <div class="d-flex justify-content-center align-items-center text-app">
+          <h1 class="font-weight-bold text-app">Xác nhận phiếu mượn sách</h1>
+        </div>
+      </div>
+      <div class="setting-body" style="border-bottom: 1px solid lightgrey">
+        <div class="d-flex flex-row p-5 mb-4 ">
+          <div class="avatar col-3 mb-4">
+            <div class="d-flex flex-column h-100">
+              <img src='assets/images/default-avatar.png' style="height: 100%; width: 100%; object-fit: cover;" alt="Avatar" />
+              <h1 class="text-app text-left font-weight-bold text-center my-4">Mã phiếu mượn: {{confirm_borrow_ticket?.borrow_ticket_id | standardizedId}}</h1>
+            </div>
+          </div>
+          <div class=" col-9 d-flex flex-column">
+            <div class="d-flex flex-column" >
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Mã phiếu mượn: </b></div>
+                <div class="col-9 text-app font-weight-bold">{{(confirm_borrow_ticket?.borrow_ticket_id | standardizedId ) || '-'}}</div>
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Khách hàng: </b></div>
+                <div class="col-9 text-app font-weight-bold">{{(confirm_borrow_ticket?.customer?.customer_id | standardizedId) + '  -  ' + confirm_borrow_ticket?.customer?.last_name + ' ' + confirm_borrow_ticket?.customer?.first_name || '-'}}</div>
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Nhân viên: </b></div>
+                <div class="col-9 text-app font-weight-bold">{{(confirm_borrow_ticket?.employee?.employee_id | standardizedId) + '  -  ' + confirm_borrow_ticket?.employee?.last_name + ' ' + confirm_borrow_ticket?.employee?.first_name || '-'}}</div>
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Ngày mượn: </b></div>
+                <div class="col-9">{{(confirm_borrow_ticket?.borrow_date| date: 'dd/MM/yyyy')|| '-'}}</div>
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Ngày hẹn trả: </b></div>
+                <div class="col-9">{{(confirm_borrow_ticket?.appointment_date| date: 'dd/MM/yyyy')|| '-'}}</div>
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Số lượng : </b></div>
+                <div class="col-9">{{(confirm_borrow_ticket?.borrow_ticket_details?.length) || '-'}}</div>
+
+              </div>
+              <div class="row py-3">
+                <div class="col-2 text-center font-weight-bold"><b>Ghi chú: </b></div>
+                <div class="col-9">{{confirm_borrow_ticket?.note || '-'}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="confirm_borrow_ticket?.borrow_ticket_details?.length > 0">
+          <h3 class="text-center text-app font-weight-bold mb-2 mt-4">Danh sách sách mượn</h3>
+          <div *ngFor="let selected_book of borrowTicket.books; let i = index" [attr.data-index]="i">
+            <div class="item-row mt-4 ">
+              <div class="row d-flex flex-row">
+                <div class="col align-self-center  font-weight-bold text-app" style="max-width:100px;"><b>
+                    {{i + 1}}
+                  </b></div>
+                <div class="col align-self-center" style="max-width: 150px;">
+                  <img [src]="selected_book?.image || 'assets/images/default-avatar.png'"
+                    style="height: 80px; width: 60px; object-fit: cover;" alt="" />
+                </div>
+                <div class="col align-self-center">{{selected_book?.book_name || "-"}}</div>
+                <div class="col align-self-center" style="max-width: 150px;">{{selected_book?.category?.category_name || "-"}}</div>
+                <div class="col align-self-center">
+                  {{selected_book?.author?.author_name || "-"}}
+                </div>
+                <div class="col align-self-center">{{selected_book?.supplier?.contact_name || "-"}}</div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="setting-footer flex-end">
+        <div class="d-flex align-items-center ml-auto  ">
+          <span *ngIf="borrowTicket?.books?.length" class="mr-4">Số lượng sách mượn:
+            <b>{{borrowTicket.books?.length}}</b>
+          </span>
+          <div class="btn-outline-app" (click)="DeleteBorrowTicket()" style="width:6rem">
+            Hủy
+          </div>
+          <div class="btn-app" (click)="Confirm()">
+            Xác nhận
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+

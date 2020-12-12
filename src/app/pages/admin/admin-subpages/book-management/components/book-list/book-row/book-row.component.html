@@ -1,0 +1,18 @@
+<div class="item-row py-2 ">
+  <div class="row">
+    <div class="col align-self-center  text-center text-app font-weight-bold" style="max-width: 150px;">{{book_item?.book_id | standardizedId}}</div>
+    <div class="col align-self-center text-center" style="max-width: 150px;">
+      <img [src]="book_item?.image || 'assets/images/default-book.png'"
+           style="height: 80px; width: 60px; object-fit: cover;" alt="" />
+    </div>
+    <div class="col align-self-center text-center text-app "><b>{{book_item?.book_name || "-"}}</b></div>
+    <div class="col align-self-center text-center" style="max-width: 300px;">{{book_item?.author?.author_name || "-"}}</div>
+    <div class="col align-self-center text-center" style="max-width: 200px;">
+      {{book_item?.supplier?.contact_name || "-"}}
+    </div>
+
+    <div class="col align-self-center text-center" style="max-width: 200px;">{{(book_item?.cost_price | vnd)|| "-"}}</div>
+    <div class="col align-self-center text-center" style="max-width: 200px;">{{(book_item?.retail_price | vnd ) || "-"}}</div>
+    <div class="col align-self-center text-center" style="max-width: 200px;">{{book_item?.old_amount + book_item?.new_amount || "-"}}</div>
+  </div>
+</div>

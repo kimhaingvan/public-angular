@@ -1,0 +1,25 @@
+<app-item-table>
+  <ng-template #header></ng-template>
+  <ng-template #emptyItem>
+    <p>Day la the item nà</p>
+  </ng-template>
+  <ng-template #item>
+    <div class=" d-flex flex-column h-100">
+      <div class="table mt-3">
+        <div class="table-header row font-weight-bold text-uppercase ng-star-inserted align-items-center my-3">
+          <div class="col text-center text-app" style="max-width: 150px;">Mã nhân viên</div>
+          <div class="col text-center  text-app" style="max-width: 150px;">Hình ảnh</div>
+          <div class="col text-center text-app">Tên nhân viên</div>
+          <div class="col text-center text-app" style="max-width: 300px;">Chứng minh thư</div>
+          <div class="col text-center text-app" style="max-width: 200px;">Số điện thoại</div>
+          <div class="col text-center text-app">Ghi chú</div>
+        </div>
+      </div>
+      <ng-container *ngFor="let employee_item of (employee_list$ | async)?.items.slice().reverse(), let i = index">
+        <app-employee-row [employee_item]="employee_item" [index]="i" (click)="onViewEmployeeDetail(employee_item.employee_id)"></app-employee-row>
+      </ng-container>
+      <app-page-pagination class="mt-auto" (navigate)="navigate($event)" [paginationOpt]="current_pagination_opt$" [currentPage]="current_page$ | async">
+      </app-page-pagination>
+    </div>
+  </ng-template>
+</app-item-table>

@@ -1,0 +1,23 @@
+<div class="navigation">
+  <nav>
+    <ul class="pagination mb-0">
+      <li class="page-item" [class.disabled]="currentPaginationOpt.previousDisabled">
+        <a name="prev" class="page-link" href="#" (click)="nav($event, -1)">
+          <i class="fa fa-long-arrow-left"></i>
+          Trang trước
+        </a>
+      </li>
+      <li class="page-item" >
+        <div name="next" class="page-link" href="#" >
+          {{currentPage}}
+        </div>
+      </li>
+      <li class="page-item"  [class.disabled]="currentPaginationOpt.nextDisabled">
+        <a name="next" class="page-link" href="#" (click)="nav($event, 1)">
+          Trang sau
+          <i class="fa fa-long-arrow-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

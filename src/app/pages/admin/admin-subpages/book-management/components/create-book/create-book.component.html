@@ -1,0 +1,162 @@
+<div class="">
+  <div class="d-flex justify-content-center align-items-center text-app font-weight-bold">
+    <h1 class="font-weight-bold">Đăng ký sách mới</h1>
+  </div>
+  <div class="d-flex flex-row p-5 mb-4" [formGroup]="createBookForm">
+    <div class="avatar col-3 mb-4">
+      <div class="d-flex flex-column flex-app">
+        <div class="product-detail-img">
+          <label class="logo-upload m-0 border rounded h-100 w-75"
+            [style.background-image]="'url(' + (createBookForm.value.image || 'assets/images/default-book.png') + ')'">
+            <div class="mask pt-2">Upload ảnh <i class="fas fa-cloud-upload-alt text-white"></i></div>
+            <div class="over-logo rounded m-0 p-0">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+            </div>
+            <div class="upload-loading m-0 p-0">
+              <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+            </div>
+            <input accept="image/png,image/jpg,image/jpeg,image/gif" name = "file"  class="d-none" type="file" (change)="onChangeLogo($event)"/>
+          </label>
+        </div>
+        <h1 class="text-app text-center font-weight-bold">Tải ảnh bìa</h1>
+      </div>
+    </div>
+    <div class=" col-9 d-flex flex-column">
+      <div class="d-flex flex-column">
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Tên sách: </b></div>
+          <div class="col-9">
+            <input type="text" class="form-control" placeholder="Nhập tên sách" formControlName="book_name"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Tác giả: </b></div>
+          <div class="col-9">
+            <div class="btn-add px-3 py-2" (click)="OpenAddAuthorModal()">
+              <i class="fa fa-plus"></i>
+            </div>
+            <select class="w3-select w3-border form-control pl-1" name="author" formControlName="author"  >
+                <option value="" disabled selected>Vui lòng chọn tác giả
+                </option>
+                <option *ngFor="let author of authors$ | async" [ngValue]="author" class="font-weight-bold">
+                  {{author?.author_name}}
+                  <div class=" px-3 py-2">
+                    <i class="fa fa-plus"></i>
+                  </div>
+                </option>
+            </select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Nhà cung cấp: </b></div>
+          <div class="col-9">
+            <div class="btn-add px-3 py-2" (click)="OpenAddSupplierModal()">
+              <i class="fa fa-plus"></i>
+            </div>
+            <select class="w3-select w3-border form-control pl-1" name="category" formControlName="supplier"  >
+                <option value="" disabled selected>Vui lòng chọn nhà cung cấp
+                </option>
+                <option *ngFor="let supplier of suppliers$ | async" [ngValue]="supplier" class="font-weight-bold">
+                  {{supplier?.contact_name || "Tên liên lạc"}} - {{supplier?.phone || "Số điện thoại"}} - {{supplier?.email || "email"}}
+                  <div class=" px-3 py-2">
+                    <i class="fa fa-plus"></i>
+                  </div>
+                </option>
+            </select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Thể loại: </b></div>
+          <div class="col-9">
+            <div class="btn-add px-3 py-2" (click)="OpenAddCategoryModal()">
+              <i class="fa fa-plus"></i>
+            </div>
+            <select class="w3-select w3-border form-control pl-1" name="category" formControlName="category"  >
+                <option value="" disabled selected>Vui lòng chọn thể loại sách
+                </option>
+                <option *ngFor="let category of categories$ | async" [ngValue]="category" class="font-weight-bold">
+                  {{category?.category_name}}
+                  <div class=" px-3 py-2">
+                    <i class="fa fa-plus"></i>
+                  </div>
+                </option>
+            </select>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Số trang: </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập số trang"
+            formControlName="page_number"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Giá vốn: </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập giá vốn "  formControlName="cost_price"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Giá bán: </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập giá bán"  formControlName="retail_price"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Số lượng sách bán: </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập số lượng sách bán"  formControlName="new_amount"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Số lượng sách mượn: </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập số lượng sách mượn"  formControlName="old_amount"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Giảm giá (%): </b></div>
+          <div class="col-9">
+            <input type="number" class="form-control" placeholder="Nhập giá trị giảm giá"
+            formControlName="discount"
+            />
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Tóm tắt: </b></div>
+          <div class="col-9">
+            <textarea class="form-control" placeholder="Nhập nhóm tắt nội dung sách" formControlName="description"></textarea>
+          </div>
+        </div>
+        <div class="row py-3">
+          <div class="col-2 app-flex"><b>Ghi chú: </b></div>
+          <div class="col-9">
+          <textarea class="form-control" placeholder="Nhập ghi chú" formControlName="note"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="row py-3">
+          <div class="col-2 app-flex">
+            <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+              </i> Quay lại</div>
+          </div>
+            <div class="col-9 d-flex flex-row justify-content-end">
+              <div class=" btn-outline-app  align-self-center mr-2" (click)="ResetDataForm()">
+                <span class="ml-1" style="width: 60px;">Hủy</span>
+              </div>
+              <div class="btn-app  align-self-center" (click)="CreateBook()">
+                <span>Tạo mới</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

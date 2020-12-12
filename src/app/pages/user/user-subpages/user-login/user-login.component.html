@@ -1,0 +1,103 @@
+<ng-container *ngIf="loading; else loaddone">
+  <div class="layout flex-column justify-content-center align-items-center " >
+    <div class="text-center" >
+      <img src="assets/images/library.jpg" style="width: 150px; margin-bottom: 10px">
+      <h3 style="color: #265fa0; font-weight: bold;">Thư quán Đại học Mở TPHCM</h3>
+      <img src="assets/images/loading.svg" style="width: 75px; margin-top: -10px;">
+    </div>
+  </div>
+</ng-container>
+<ng-template #loaddone>
+  <div class="wrapper-login">
+    <div class="login-body">
+      <div class="left-side d-flex flex-column">
+        <div class="d-flex  p-3 mb-4 align-items-center title-school">
+          <img src="assets/images/library.jpg" alt="Logo Ou University" style="width: 50px;" />
+          <div class="ml-2 brand-text">
+            Thư quán Trường đại học Mở Thành phố Hồ Chí Minh
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center w-100 h-100 flex-column">
+          <h1 style="
+              width: 670px;
+              color: var(--app-color);
+              font-weight: bold;
+            " class="text-center">
+            Chào mừng bạn đến với thư quán <br> Trường đại học Mở Thành phố Hồ Chí Minh
+          </h1>
+          <div class="welcome h-75 w-75 mt-2" style="
+              background-image: url('https://top10tphcm.com/wp-content/uploads/2019/10/image002-3.jpg');
+            "></div>
+          <div class="bookmark text-center mt-3">
+            <blockquote class="mb-0">
+              "Người đọc quá nhiều và dùng tới bộ óc quá ít sẽ rơi vào thói quen
+              suy nghĩ lười biếng.
+            </blockquote>
+            <blockquote class="mb-0">
+              – Any man who reads too much and uses his own brain too little falls
+              into lazy habits of thinking."
+            </blockquote>
+            <i>-Albert Einstein</i>
+          </div>
+        </div>
+      </div>
+      <div class="right-side py-5 px-5" [formGroup]="login_form">
+        <div class="d-flex flex-column mt-3">
+          <strong style="font-size: 30px;" class="mb-4">Đăng nhập</strong>
+          <div class="info">
+            <p class="mt-2">
+              Bạn có thể dùng email hoặc số điện thoại để đăng nhập.
+            </p>
+          </div>
+          <div class="form-group">
+            <input type="text" class="rounded-pill  form-control" placeholder="Nhập số điện thoại hoặc email" autofocus name="userName" formControlName="user_name"/>
+          </div>
+          <div class="form-group position-relative">
+            <div  class="position-absolute changephone-text">
+              Hiển thị
+            </div>
+            <input id="password" type="password" class="rounded-pill form-control" placeholder="Nhập mật khẩu"  name="password" formControlName="password"/>
+          </div>
+          <div class="rounded-pill d-block w-100 btn-outline-app" type="button" (click)="Login()">
+            <!-- <i class="fa fa-spinner fa-spin mr-2" *ngIf="loading"></i> -->
+            Đăng nhập
+          </div>
+        </div>
+        <div class=" text-white forgot d-inline-block mt-2" style="cursor: pointer;"  (click)="OpenForgotPasswordModal()">
+          Quên mật khẩu?
+        </div>
+      </div>
+    </div>  
+    <div class="login-footer">
+      <div class="left-side px-4 py-1 d-flex justify-content-around" style="font-size: 13px; font-weight: 100px;">
+        <div class="">
+          <b class="brand-text" style="color: var(--app-color);">Thư quán Trường đại học Mở Thành phố Hồ Chí Minh</b>
+          <div class="d-flex">
+            <div>
+              <b>Địa chỉ: </b>
+            </div>
+            <div>
+              <i>
+                97 Võ Văn Tần, Phường 6, Quận 3, Hồ Chí Minh (Chi nhánh 1)
+                <br />371 Nguyễn Kiệm, Phường 3, Quận Gò Vấp, Hồ Chí Minh (Chi
+                nhánh 2) <br /></i>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="d-flex flex-column pt-3">
+            <div>Điện thoại: <b>028 3930 0072</b></div>
+            <div>Email:<b>ou@ou.edu.vn</b></div>
+            <div>(8:30-17:30 từ thứ 2 đến thứ 7. Không hỗ trợ chủ nhật)</div>
+          </div>
+        </div>
+      </div>
+      <div class="right-side py-2 d-flex justify-content-center align-items-center">
+        <span class="mr-2" style="color: #eee;">Bạn chưa có tại khoản ? </span>
+        <div class="btn rounded-pill btn-outline-app" style="font-size: 14px;" [routerLink]="['/user/register']">
+         Đăng ký
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

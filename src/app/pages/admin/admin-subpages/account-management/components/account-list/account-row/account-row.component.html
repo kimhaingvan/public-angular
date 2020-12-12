@@ -1,0 +1,9 @@
+<div class="item-row py-2 ">
+    <div class="row">
+      <div class="col align-self-center  text-center text-app font-weight-bold" style="max-width: 150px;">{{account_item?.account_id | standardizedId}}</div>
+      <div class="col align-self-center text-center font-weight-bold "><b>{{account_item?.account_name  || "-"}}</b></div>
+      <div class="col align-self-center text-center " style="max-width: 300px;">{{(account_item?.role?.role_name == "user" ? "Khách hàng": (account_item?.role?.role_name == "admin" ? "Nhân viên": "Quản lý")) || '-'}}</div>
+      <div class="col align-self-center text-center" >{{account_item?.note || "-"}}</div>
+    </div>
+  </div>
+  

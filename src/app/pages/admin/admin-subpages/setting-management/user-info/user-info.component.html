@@ -1,0 +1,98 @@
+<div class="box setting-box mt-0">
+  <div class="setting-header">Thông tin người dùng</div>
+  <div class="setting-body">
+    <h1 class="text-app text-left font-weight-bold text-center my-4" > <b   class="cursor-pointer">
+    </b></h1>
+    <div class="row py-2" *ngIf="user_info.account?.role?.role_id == 1 || user_info?.account?.role?.role_id == 2">
+      <div class="col-2 app-flex">
+        <b>
+          Ảnh đại diện
+        </b>
+      </div>
+      <div class="col-10 text-center">
+        <img [src]="user_info?.image || 'assets/images/default-avatar.png'"
+             style="height: 80px; width: 60px; object-fit: cover;" alt="" />
+      </div>
+    </div>
+    <div class="row py-2" *ngIf="user_info.account?.role?.role_id == 1 || user_info?.account?.role?.role_id == 2">
+      <div class="col-2 app-flex">
+        <b *ngIf="user_info.account?.role?.role_id == 1 || user_info?.account?.role?.role_id == 2">
+          Mã nhân viên
+        </b>
+      </div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only text-app" disabled placeholder="Nhập địa chỉ email"
+        (ngModelChange)="user_info.employee_id=$event" name="inputField" [ngModel]="user_info.employee_id | standardizedId"
+        />
+      </div>
+    </div>
+    <div class="row py-2" *ngIf="user_info.account?.role?.role_id == 3">
+      <div class="col-2 app-flex">
+        <b *ngIf="user_info.account?.role?.role_id == 3">
+          Mã khách hàng
+        </b>
+      </div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only text-app" disabled placeholder="Nhập địa chỉ email"
+        (ngModelChange)="user_info.customer_id=$event" name="inputField" [ngModel]="user_info.customer_id | standardizedId"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Tên người dùng</b></div>
+      <div class="col-5">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập họ người dùng"
+        [(ngModel)]="user_info.last_name"
+        />
+      </div>
+      <div class="col-5">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập tên người dùng"
+        [(ngModel)]="user_info.first_name"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Email: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập địa chỉ email"
+        [(ngModel)]="user_info.email"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Chứng minh thư: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập chứng minh thư"
+        [(ngModel)]="user_info.identity_id"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Số điện thoại: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập số điện thoại"
+        [(ngModel)]="user_info.phone"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Địa chỉ: </b></div>
+      <div class="col-10">
+        <input type="text" class="form-control read-only" disabled placeholder="Nhập địa chỉ liên lạc"
+        [(ngModel)]="user_info.address"
+        />
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-2 app-flex"><b>Ngày sinh: </b></div>
+      <div class="col-10">
+        <input type="datetime" class="form-control read-only" disabled  placeholder="Nhập vào ngày sinh"  [(ngModel)]="user_info.birth_day"/>
+      </div>
+    </div>
+  </div>
+  <div class="setting-footer ">
+    <div class="btn-outline-app ml-auto" (click)="OpenUpdateUserModal()">
+      Cập nhật thông tin
+    </div>
+  </div>
+</div>

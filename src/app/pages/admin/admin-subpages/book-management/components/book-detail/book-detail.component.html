@@ -1,0 +1,348 @@
+<ng-container>
+  <div class="d-flex justify-content-center align-items-center text-app font-weight-bold">
+    <h1 class="font-weight-bold">Thông tin chi tiết sách <span>{{ (detail_book$ | async)?.book_name}}</span></h1>
+  </div>
+
+  <ng-container *ngIf="!isEditing, else updateForm">
+    <div class="d-flex flex-row p-5 mb-4">
+      <div class="avatar col-3 mb-4">
+        <div class="d-flex flex-column align-items-center">
+          <img [src]="(detail_book$ | async)?.image || 'assets/images/default-book.png '"style="height: 400px; width: 300px; object-fit: cover;" alt="Avatar" />
+          <div class="mt-3 text-center"><b>Hình ảnh thực tế từ khách hàng</b></div>
+          <div class="d-flex flex-row justify-content-center">
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar" class="p-1 m-2 real-avatar" />
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar" class="p-1 m-2 real-avatar" />
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar"  class="p-1 m-2 real-avatar"/>
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar"  class="p-1 m-2 real-avatar"/>
+          </div>
+          <h1 class="text-app text-left font-weight-bold text-center my-4">Mã sách: {{(detail_book$ | async)?.book_id | standardizedId}}</h1>
+        </div>
+      </div>
+      <div class=" col-9 d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Mã sách: </b></div>
+            <div class="col-9 text-app font-weight-bold">{{((detail_book$ | async)?.book_id | standardizedId ) || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tên sách: </b></div>
+            <div class="col-9 text-app font-weight-bold">{{(detail_book$ | async)?.book_name || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tác giả: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.author?.author_name || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Nhà cung cấp: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.supplier?.contact_name || "-"}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Thể loại: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.category?.category_name || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Số trang: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.page_number || 0}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Giá vốn: </b></div>
+            <div class="col-9">{{((detail_book$ | async)?.cost_price |vnd)|| 0 }}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Giá bán: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.retail_price || 0}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Giảm giá: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.discount }}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tồn kho sách bán : </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.new_amount }}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tồn kho sách mượn: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.old_amount }}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Tóm tắt: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.description || '-'}}</div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 text-center font-weight-bold"><b>Ghi chú: </b></div>
+            <div class="col-9">{{(detail_book$ | async)?.note || '-'}}</div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex">
+              <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+                </i> Quay lại</div>
+            </div>
+            <ng-container>
+              <div class="col-9 d-flex flex-row justify-content-end" >
+                <div class="btn-danger  align-self-center mr-2" (click)="onOpenDeleteModal()">
+                  <i class="fas fa-trash-alt trash-icon"></i>
+                  <span class="ml-1" style="width: 60px;">Xóa bỏ</span>
+                </div>
+                <div class="btn-app  align-self-center" (click)="onClickUpdateBtn()">
+                  <i class="fas fa-tools mr-2 "></i>
+                  <span>Cập nhật</span>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #editButtons>
+              <div class="d-flex flex-row ml-auto">
+                <div class="btn  btn-outline-danger d-flex justify-content-center align-items-center mr-2">
+                  Hủy
+                </div>
+                <div class="btn btn-app btn-outline-app align-self-center" >
+                  <span class="ml-1">Xác nhận</span>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #updateForm>
+    <div class="d-flex flex-row p-5 mb-4" [formGroup]="updateBookForm">
+      <div class="avatar col-3 mb-4">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <label class="logo-upload m-0 border rounded h-100 w-75"
+                 [style.background-image]="'url(' + (updateBookForm.value.image || 'assets/images/default-book.png') + ')'">
+            <div class="mask pt-2">Upload ảnh <i class="fas fa-cloud-upload-alt text-white"></i></div>
+            <div class="over-logo rounded m-0 p-0">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+            </div>
+            <div class="upload-loading m-0 p-0">
+              <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+            </div>
+            <input accept="image/png,image/jpg,image/jpeg,image/gif" name = "file"  class="d-none" type="file" (change)="onChangeLogo($event)"/>
+          </label>
+          <b class="mt-3">Hình ảnh thực tế từ khách hàng</b>
+          <div class="d-flex flex-row justify-content-center">
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar" class="p-1 m-2 real-avatar" />
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar" class="p-1 m-2 real-avatar" />
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar"  class="p-1 m-2 real-avatar"/>
+            <img src='assets/images/default-book.png' style="height: 70px; width: 70px; object-fit: cover;" alt="Avatar"  class="p-1 m-2 real-avatar"/>
+          </div>
+          <h1 class="text-app text-left font-weight-bold text-center my-4">Mã sách: {{(detail_book$ | async)?.studentCode}}</h1>
+        </div>
+      </div>
+      <!-- <div class=" col-9 d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tên sách: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập tên sách" formControlName="book_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tác giả: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập tác giả"
+              formControlName="author_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Nhà cung cấp: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập nhà cung cấp"
+              formControlName="supplier_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Thể loại: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập thể loại sách"
+              formControlName="category_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Số trang: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập số trang"
+              formControlName="page_number"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giá vốn: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá vốn "  formControlName="cost_price"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giá bán: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá bán"  formControlName="retail_price"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giảm giá (%): </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá trị giảm giá"
+              formControlName="discount"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tóm tắt: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập tóm tắt nội dung sách"  formControlName="description"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Ghi chú: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập ghi chú"   formControlName="note"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex">
+              <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+                </i> Quay lại</div>
+            </div>
+              <div class="col-9 d-flex flex-row justify-content-end">
+                <div class="btn-danger btn-outline  align-self-center mr-2" (click)="setupDataForm()">
+                  <span class="ml-1" style="width: 60px;">Hủy</span>
+                </div>
+                <div class="btn-app  align-self-center" (click)="onClickUpdateBtn()">
+                  <span>Xác nhận</span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div> -->
+      <div class=" col-9 d-flex flex-column">
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tên sách: </b></div>
+            <div class="col-9">
+              <input type="text" class="form-control" placeholder="Nhập tên sách" formControlName="book_name"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tác giả: </b></div>
+            <div class="col-9">
+              <div class="btn-add px-3 py-2" (click)="OpenAddAuthorModal()">
+                <i class="fa fa-plus"></i>
+              </div>
+              <select class="w3-select w3-border form-control pl-1" name="author" formControlName="author">
+                  <option value="" disabled>Vui lòng chọn tác giả
+                  </option>
+                  <option
+                  *ngFor="let auth of authors$ | async" [ngValue]="auth" class="font-weight-bold" [selected]="auth.author_id == 1"
+                  >
+                    {{auth?.author_name}}
+                  </option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Nhà cung cấp: </b></div>
+            <div class="col-9">
+              <div class="btn-add px-3 py-2" (click)="OpenAddSupplierModal()">
+                <i class="fa fa-plus"></i>
+              </div>
+              <select class="w3-select w3-border form-control pl-1" name="supplier" formControlName="supplier"  >
+                  <option *ngFor="let supplier of suppliers$ | async" [ngValue]="supplier" class="font-weight-bold" [selected]="supplier.supplier_id == book_detail_in_store ">
+                    {{supplier?.contact_name || "Tên liên lạc"}} - {{supplier?.phone || "Số điện thoại"}} - {{supplier?.email || "email"}}
+                  </option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Thể loại: </b></div>
+            <div class="col-9">
+              <div class="btn-add px-3 py-2" (click)="OpenAddCategoryModal()">
+                <i class="fa fa-plus"></i>
+              </div>
+              <select class="w3-select w3-border form-control pl-1" name="category" formControlName="category"  >
+                  <option value="" disabled selected>Vui lòng chọn thể loại sách
+                  </option>
+                  <option *ngFor="let category of categories$ | async" [ngValue]="category" class="font-weight-bold">
+                    {{category?.category_name}}
+                    <div class=" px-3 py-2">
+                      <i class="fa fa-plus"></i>
+                    </div>
+                  </option>
+              </select>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Số trang: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập số trang"
+              formControlName="page_number"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giá vốn: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá vốn "  formControlName="cost_price"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giá bán: </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá bán"  formControlName="retail_price"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Giảm giá (%): </b></div>
+            <div class="col-9">
+              <input type="number" class="form-control" placeholder="Nhập giá trị giảm giá"
+              formControlName="discount"
+              />
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Tóm tắt: </b></div>
+            <div class="col-9">
+              <textarea class="form-control" placeholder="Nhập nhóm tắt nội dung sách" formControlName="description"></textarea>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-2 app-flex"><b>Ghi chú: </b></div>
+            <div class="col-9">
+            <textarea class="form-control" placeholder="Nhập ghi chú" formControlName="note"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="row py-3">
+            <div class="col-2 app-flex">
+              <div class="btn btn-outline-app" (click)="goBack()"> <i class="fa fa-arrow-left pr-1" aria-hidden="true">
+                </i> Quay lại</div>
+            </div>
+              <div class="col-9 d-flex flex-row justify-content-end">
+                <div class=" btn-outline-app  align-self-center mr-2" (click)="setupDataForm()">
+                  <span class="ml-1" style="width: 60px;">Hủy</span>
+                </div>
+                <div class="btn-app  align-self-center" (click)="UpdateBook()">
+                  <span>Xác nhận</span>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

@@ -1,0 +1,29 @@
+<div class="item-row py-2">
+  <div class="row d-flex flex-row">
+
+    <div class="col font-weight-bold text-app app-flex flex-column text-center" style="max-width:200px;">
+      {{(borrow_ticket_item?.borrow_ticket_id| standardizedId) || "-"}}
+    </div>
+
+    <div class="col font-weight-bold text-app app-flex flex-column text-center" style="max-width:200px;">
+      <div> {{(borrow_ticket_item?.customer?.customer_id | standardizedId)|| "-"}}
+        <i class="fas fa-external-link-alt external-link-icon"></i>
+      </div>
+      <div>{{(borrow_ticket_item?.customer?.last_name) + ' ' + (borrow_ticket_item?.customer?.first_name) || "-"}}
+      </div>
+    </div>
+
+    <div class="col app-flex flex-column text-center" style="max-width:200px;">{{(borrow_ticket_item?.borrow_date | date: 'dd/MM/yyyy')}}
+    </div>
+
+    <div class="col app-flex flex-column text-center" style="max-width:200px;">{{(borrow_ticket_item?.appointment_date   | date: 'dd/MM/yyyy')|| "-"}}</div>
+
+    <div class="col app-flex flex-column text-center" style="max-width:200px;">{{(borrow_ticket_item?.return_date   | date: 'dd/MM/yyyy')|| "-"}}</div>
+
+    <div class="col app-flex flex-column text-center" style="max-width:200px;" [class.text-success]="borrow_status == 'Hoàn thành'"
+      [class.text-warning]="borrow_status == 'Đang trễ'" [class.text-app]="borrow_status == 'Đang mượn'" [class.text-danger]="borrow_status == 'Trả trễ'" >{{(borrow_status)|| "-"}}
+    </div>
+    <div class="col app-flex flex-column text-center">{{(borrow_ticket_item?.note || "-")}}</div>
+  </div>
+</div>
+<!-- Modal -->

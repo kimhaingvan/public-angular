@@ -1,0 +1,26 @@
+<app-item-table>
+  <ng-template #header></ng-template>
+  <ng-template #emptyItem>
+    <p>Day la the item nà</p>
+  </ng-template>
+  <ng-template #item>
+    <div class=" d-flex flex-column h-100">
+      <div class="table mt-3">
+        <div class="table-header row font-weight-bold text-uppercase ng-star-inserted align-items-center my-3">
+          <div class="col text-app text-center" style="max-width: 200px;">Mã phiếu mượn</div>
+          <div class="col text-app text-center" style="max-width: 200px;">Mã đọc giả</div>
+          <div class="col text-app text-center" style="max-width: 200px;">Ngày mượn</div>
+          <div class="col text-app text-center" style="max-width: 200px;">Ngày hẹn trả</div>
+          <div class="col text-app text-center" style="max-width: 200px;">Ngày trả</div>
+          <div class="col text-app text-center" style="max-width: 200px;">Trạng thái</div>
+          <div class="col text-app text-center" >Ghi chú</div>
+        </div>
+      </div>
+      <ng-container *ngFor="let borrow_ticket_item of (borrow_ticket_list$ | async)?.items.slice().reverse(), let i = index">
+        <app-borrow-ticket-row [borrow_ticket_item]="borrow_ticket_item" [index]="i" (click)="onViewBorrowTicketDetail(borrow_ticket_item.borrow_ticket_id)"></app-borrow-ticket-row>
+      </ng-container>
+      <app-page-pagination class="mt-auto" (navigate)="navigate($event)" [paginationOpt]="current_pagination_opt$" [currentPage]="current_page$ | async">
+      </app-page-pagination>
+    </div>
+  </ng-template>
+</app-item-table>

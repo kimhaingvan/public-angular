@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <div class="modal-title big-font">
+    Thêm tác giả
+  </div>
+  <div class="close" (click)="dismissModal()">
+    <span class="text-large">&times;</span>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row py-3">
+    <div class="col-3 app-flex"><b>Tên tác giả: </b></div>
+    <div class="col-9">
+      <input type="text" class="form-control" placeholder="Nhập tên sách" name="author_name" [(ngModel)]="author.author_name"
+      />
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-app btn-outline-app" (click)="dismissModal()">Đóng</button>
+  <button class="btn btn-app text-white" (click)="AddAuthor()">
+    Xác nhận
+  </button>
+</div>

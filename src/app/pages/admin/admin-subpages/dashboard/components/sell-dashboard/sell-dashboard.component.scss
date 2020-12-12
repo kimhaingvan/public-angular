@@ -1,0 +1,29 @@
+.point-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  left: -1.5rem;
+  padding: 1rem 0 1rem 2rem;
+  position: relative;
+  width: 120%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 2.75rem;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,.25);
+}
+
+.opacity-50 {
+  opacity: .5;
+}
+.icon-compare {
+  border-radius: 50%;
+  border: 1px solid;
+  padding: 2px;
+}
+
+app-dashboard-box::ng-deep .box {
+  height: 100%;
+}
+
+#columnchart_values::ng-deep svg g rect {
+}

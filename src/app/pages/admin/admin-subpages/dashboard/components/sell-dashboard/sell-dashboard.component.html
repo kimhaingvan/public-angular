@@ -1,0 +1,134 @@
+<div class="point-title"><i class="fas fa-circle mr-3 text-app"></i>Hôm nay</div>
+<div class="row">
+  <div class="col">
+    <app-dashboard-box [title]="'Đơn hàng'">
+      <ng-template #content>
+        <div class="d-flex flex-row align-content-between">
+          <div class="col text-left">
+            <div class="mb-2">Trong ngày</div>
+            <strong class="font-weight-bolder text-break" style="font-size: 1.6rem">{{dashboard?.today_order_count?.value}}</strong>
+          </div>
+          <div class="col text-right">
+            <div class="mb-2">Trong tháng</div>
+            <strong class="font-weight-bolder text-break" style="font-size: 1.6rem">{{dashboard?.month_order_count?.value}}</strong>
+          </div>
+        </div>
+      </ng-template>
+    </app-dashboard-box>
+  </div>
+  <div class="col">
+    <app-dashboard-box [title]="'Doanh thu'">
+      <ng-template #content>
+        <div class="d-flex flex-row align-content-between">
+          <div class="col text-left">
+            <div class="mb-2">Trong ngày</div>
+            <strong class="font-weight-bolder text-break" style="font-size: 1.6rem">{{dashboard?.revenue_today?.value | vnd}}</strong>
+          </div>
+          <div class="col text-right">
+            <div class="mb-2">Trong tháng</div>
+            <strong class="font-weight-bolder text-break" style="font-size: 1.6rem">{{dashboard?.month_total_revenue?.value | vnd}}</strong>
+          </div>
+        </div>
+      </ng-template>
+    </app-dashboard-box>
+  </div>
+  <div class="col">
+    <app-dashboard-box [title]="'So với hôm qua'">
+      <ng-template #content>
+        <div class="d-flex flex-row align-content-between">
+          <div class="col text-left">
+            <div class="mb-2">Tỉ lệ doanh thu</div>
+            <strong class="font-weight-bolder text-break" style="font-size: 1.6rem" [ngClass]="{'text-success': dashboard?.percentage_today_revenue_to_prev_day?.value>= 1, 'text-danger': dashboard?.percentage_today_revenue_to_prev_day?.value < 1}">
+              {{(dashboard?.percentage_today_revenue_to_prev_day?.value * 100).toFixed(2)}}%
+            </strong>
+          </div>
+          <div class="col text-right">
+            <div class="mb-2">Tốc độ tăng trường</div>
+            <strong class="font-weight-bolder text-success text-break" style="font-size: 1.6rem" *ngIf="dashboard?.grow_percentage_to_prev_day?.value >= 0">
+              <i aria-hidden="true" class="fa fa-arrow-up icon-compare "></i>
+              {{(dashboard?.grow_percentage_to_prev_day?.value * 100).toFixed(2)}}%
+            </strong>
+            <strong class="font-weight-bolder text-danger text-break" style="font-size: 1.6rem" *ngIf="dashboard?.grow_percentage_to_prev_day?.value < 0">
+              <i aria-hidden="true" class="fa fa-arrow-down icon-compare "></i>
+              {{(dashboard?.grow_percentage_to_prev_day?.value * 100).toFixed(2)}}%
+            </strong>
+          </div>
+        </div>
+      </ng-template>
+    </app-dashboard-box>
+  </div>
+  <div class="col">
+  <app-dashboard-box [title]="'So với tháng trước'">
+    <ng-template #content>
+      <div class="d-flex flex-row align-content-between">
+        <div class="col text-left">
+          <div class="mb-2 text-dark">Tỉ lệ doanh thu</div>
+          <strong class="font-weight-bolder text-break" style="font-size: 1.6rem" [ngClass]="{'text-success': dashboard?.percentage_month_revenue_to_prev_month?.value>= 1, 'text-danger': dashboard?.percentage_month_revenue_to_prev_month?.value < 1}">{{(dashboard?.percentage_month_revenue_to_prev_month?.value * 100).toFixed(2)}}%</strong>
+        </div>
+        <div class="col text-right">
+          <div class="mb-2">Tốc độ tăng trường</div>
+          <strong class="font-weight-bolder text-success text-break" style="font-size: 1.6rem" *ngIf="dashboard?.grow_percentage_to_prev_month?.value >= 0">
+            <i aria-hidden="true" class="fa fa-arrow-up icon-compare  text-break"></i>
+            {{(dashboard?.grow_percentage_to_prev_month?.value * 100).toFixed(2)}}%
+          </strong>
+          <strong class="font-weight-bolder text-danger" style="font-size: 1.6rem" *ngIf="dashboard?.grow_percentage_to_prev_month?.value < 0">
+            <i aria-hidden="true" class="fa fa-arrow-down icon-compare text-break "></i>
+            {{(dashboard?.grow_percentage_to_prev_month?.value * 100).toFixed(2)}}%
+          </strong>
+        </div>
+      </div>
+    </ng-template>
+  </app-dashboard-box>
+</div>
+</div>
+
+<div class="point-title mt-4"><i class="fas fa-circle mr-3 text-app"></i>Trong tháng này</div>
+
+<div class="row">
+  <div class="col-8">
+    <div id="columnchart_values" class="w-100 mb-5"></div>
+    <div id="curve_chart" class="w-100 mt-5"></div>
+  </div>
+
+  <div class="col-4 ">
+    <div class="row">
+      <div class="col-12">
+        <app-dashboard-box [title]="'Doanh số bán hàng theo nhân viên'">
+          <ng-template #content>
+            <div class="d-flex flex-row align-content-between">
+              <div class="col-6 text-left font-weight-bolder opacity-50">NHÂN VIÊN</div>
+              <div class="col-3 text-right font-weight-bolder opacity-50">SỐ ĐƠN HÀNG</div>
+              <div class="col-3 text-right font-weight-bolder opacity-50">DOANH THU</div>
+            </div>
+            <div class="d-flex flex-row align-content-between my-2" *ngFor="let best_seller of dashboard?.best_sellers_in_month?.value, let i = index">
+              <div class="col-6 text-left  ">{{i + 1}}.{{best_seller?.employee?.last_name}} {{best_seller?.employee?.first_name}} </div>
+              <div class="col-3 text-right font-weight-bolder text-break" >{{best_seller?.order_amount}}</div>
+              <div class="col-3 text-right font-weight-bolder text-break">{{best_seller?.total_revenue | vnd}}</div>
+            </div>
+          </ng-template>
+        </app-dashboard-box>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <app-dashboard-box [title]="'Sản phẩm bán chạy'">
+          <ng-template #content>
+            <div class="d-flex flex-row align-content-between">
+              <div class="col-9 text-left font-weight-bolder opacity-50">SẢN PHẨM</div>
+              <div class="col-3 text-right font-weight-bolder opacity-50">SỐ LƯỢNG</div>
+            </div>
+            <div class="d-flex flex-row align-content-between my-2"
+                 *ngFor="let book of dashboard?.most_favorite_books?.value, let i = index">
+              <div class="col-9 text-left  ">{{i + 1}}.
+                <img [src]="book?.book?.image || 'assets/images/default-book.png'" style="width:30px; background-size: cover; height: 40px;" alt="">
+                {{book?.book?.book_name}}  </div>
+              <div class="col-3 text-right font-weight-bolder text-break" >{{book?.total_quantity}}</div>
+            </div>
+          </ng-template>
+        </app-dashboard-box>
+      </div>
+    </div>
+  </div>
+
+</div>
+

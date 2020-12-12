@@ -1,0 +1,24 @@
+<app-item-table>
+  <ng-template #header></ng-template>
+  <ng-template #emptyItem>
+    <p>Day la the item nà</p>
+  </ng-template>
+  <ng-template #item>
+    <div class=" d-flex flex-column h-100">
+      <div class="table mt-3">
+        <div class="table-header row font-weight-bold text-uppercase ng-star-inserted align-items-center my-3">
+          <div class="col text-center text-app" style="max-width: 150px;">Mã tài khoản</div>
+          <div class="col text-center text-app">Tên tài khoản</div>
+          <div class="col text-center text-app" style="max-width: 300px;">Vai trò</div>
+          <!-- <div class="col text-center text-app" style="max-width: 200px;">as</div> -->
+          <div class="col text-center text-app">Ghi chú</div>
+        </div>
+      </div>
+      <ng-container *ngFor="let account_item of (account_list$ | async)?.items.slice().reverse(), let i = index">
+        <app-account-row [account_item]="account_item" [index]="i" (click)="onViewAccountDetail(account_item.account_id)"></app-account-row>
+      </ng-container>
+      <app-page-pagination class="mt-auto" (navigate)="navigate($event)" [paginationOpt]="current_pagination_opt$" [currentPage]="current_page$ | async">
+      </app-page-pagination>
+    </div>
+  </ng-template>
+</app-item-table>
